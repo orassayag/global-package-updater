@@ -1,0 +1,48 @@
+Overview:
+
+This projects a automatic tool that validates globally installed npm packages, checks for available updates, and upgrades them sequentially to ensure stability. It also verifies whether newer versions of Node.js and Git are available.
+
+Plan:
+1. Once this "pnpm run start" script will run, it will execute the "npm outdated -g" command.
+2. If there are no outdated packages, it will skip to the next step (See point 65).
+3. If there are outdated global packages, it will display #COUNT# outdated packages, updating... (It will be displayed from now on a progress bar with animated loading - See how we implemented it on C:\Or\web\projects\repos-maintainer.
+4. One by one (not all together), it will take from the list the name of the outdated package, and will update it. On the progress bar it will be displayed as the following:
+#ANIMATED LOADER# Updating create-next-app | 16.2.3 -> 16.2.4 [1/13]
+5. If any of the update packages are fail, we will try catch it and continue to the next package update.
+6. We will list in the end the packages we failed to update and the specific error we got.
+7. This script will be run and execute by a bat file from the desktop, See how we implemented it on C:\Or\web\projects\repos-maintainer - C:\Users\Or Assayag\Desktop\reposScanReporter.bat
+8. After finish with all the packages updated, we will run "node --version" and "git --version" and check the versions against the latest version.
+9. On the end, we will display a list of all the updated packages:
+create-next-app      | 16.2.3     -> 16.2.4
+firebase-tools       | 15.14.0    -> 15.16.0
+node                 | 24.0.0     -> 25.0.0 ! Needs to be updated manually
+git                  | 24.0.0     -> 25.0.0 ! Needs to be updated manually
+
+=========================
+
+Microsoft Windows [Version 10.0.19045.7184]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\Or Assayag>npm outdated -g
+Package                    Current   Wanted   Latest  Location                                Depended by
+create-next-app             16.2.3   16.2.4   16.2.4  node_modules/create-next-app            global
+eslint-plugin-react-hooks    7.0.1    7.1.1    7.1.1  node_modules/eslint-plugin-react-hooks  global
+firebase-tools             15.14.0  15.16.0  15.16.0  node_modules/firebase-tools             global
+npm                        11.12.1  11.13.0  11.13.0  node_modules/npm                        global
+pnpm                       10.33.0  10.33.2  10.33.2  node_modules/pnpm                       global
+vercel                     50.43.0   52.2.1   52.2.1  node_modules/vercel                     global
+
+C:\Users\Or Assayag>
+
+
+
+
+
+
+
+
+
+
+https://github.com/orassayag/global-package-updater
+
+CLI tool that validates globally installed npm packages, checks for updates, and upgrades them sequentially for stability. It also verifies new Node.js and Git versions to keep your environment secure and consistent. Built in April 2026, it demonstrates automated validation, incremental updates, and efficient dependency management workflows.

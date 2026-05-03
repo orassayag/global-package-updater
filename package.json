@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "CLI tool that validates globally installed npm packages, checks for available updates, and upgrades them sequentially to ensure stability. It also verifies whether newer versions of Node.js and Git are available, helping you keep your development environment secure, consistent, and fully up to date.",
   "type": "module",
-  "private": true,
+  "private": false,
   "repository": {
     "type": "git",
     "url": "git://github.com/orassayag/global-package-updater.git"
@@ -77,12 +77,17 @@
     "node": ""
   },
   "dependencies": {
-    "dotenv": "^17.4.2"
+    "chalk": "^5.6.2",
+    "dotenv": "^17.4.2",
+    "latest-version": "^9.0.0",
+    "ora": "^9.4.0",
+    "semver": "^7.7.4"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@rolldown/binding-win32-x64-msvc": "^1.0.0-rc.18",
     "@types/node": "^25.6.0",
+    "@types/semver": "^7.7.1",
     "@typescript-eslint/eslint-plugin": "^8.59.1",
     "@typescript-eslint/parser": "^8.59.1",
     "@vitest/coverage-istanbul": "^4.1.5",
