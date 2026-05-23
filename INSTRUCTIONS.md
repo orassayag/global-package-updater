@@ -45,7 +45,7 @@ The application is configured to run automatically, but you can adjust behavior 
 
 ### Search Engines Configuration
 
-*(Note: This section is repurposed for Package Search behavior)*
+_(Note: This section is repurposed for Package Search behavior)_
 
 The application uses standard NPM registry queries:
 
@@ -55,39 +55,39 @@ The application uses standard NPM registry queries:
 
 ### Search Keys Configuration
 
-*(Note: This section is repurposed for Version Check behavior)*
+_(Note: This section is repurposed for Version Check behavior)_
 
 The environment check utilizes the following external endpoints:
 
-- **Node.js**: Queries `https://nodejs.org/dist/index.json` to find the latest stable release.
+- **Node.js**: Queries `https://nodejs.org/dist/index.json` to find the latest LTS release.
 - **Git**: Queries the GitHub API tags for `git/git` to determine the latest official version.
 
 ### Filter Configurations
 
 #### Email Address Filters
 
-*(Note: This section is repurposed for Package Filtering)*
+_(Note: This section is repurposed for Package Filtering)_
 
 - The application scans all globally installed packages.
 - You can manually exclude specific packages by modifying the filter logic in `src/utils/npm.ts`.
 
 #### Link Filters
 
-*(Note: This section is repurposed for Version Parsing)*
+_(Note: This section is repurposed for Version Parsing)_
 
 - Version strings are filtered and normalized using the `semver` library.
 - It automatically handles 'v' prefixes and ensures only valid semantic versions are compared.
 
 #### File Extension Filters
 
-*(Note: This section is repurposed for CLI Output)*
+_(Note: This section is repurposed for CLI Output)_
 
 - The CLI filters out unnecessary terminal noise to provide a clean, focused update experience.
 - Uses `ora` to manage visual spinners and `chalk` for color-coded status reporting.
 
 ### Email Domain Configurations
 
-*(Note: This section is repurposed for Update Logic)*
+_(Note: This section is repurposed for Update Logic)_
 
 - Sequential Updates: Packages are updated one by one to prevent race conditions.
 - Error Recovery: If an update fails, the application captures the error and proceeds to the next package in the queue.
@@ -96,7 +96,7 @@ The environment check utilizes the following external endpoints:
 
 ### Main Crawler (with Monitor)
 
-*(Note: This section is repurposed for the Main Updater)*
+_(Note: This section is repurposed for the Main Updater)_
 
 Starts the global package update process:
 
@@ -114,7 +114,7 @@ This launches the orchestration logic which:
 
 ### Backup
 
-*(Note: This section is kept for structure, repurposed for Code Quality)*
+_(Note: This section is kept for structure, repurposed for Code Quality)_
 
 Runs formatting and linting to ensure code consistency:
 
@@ -125,7 +125,7 @@ pnpm run lint
 
 ### Domain Counter
 
-*(Note: This section is repurposed for Synchronization)*
+_(Note: This section is repurposed for Synchronization)_
 
 Runs the automated sync command:
 
@@ -137,7 +137,7 @@ pnpm run sync
 
 #### Validate Single Email
 
-*(Note: This section is repurposed for Vitest UI)*
+_(Note: This section is repurposed for Vitest UI)_
 
 Opens the interactive Vitest dashboard:
 
@@ -147,7 +147,7 @@ pnpm test:ui
 
 #### Validate Multiple Emails
 
-*(Note: This section is repurposed for Full Test Suite)*
+_(Note: This section is repurposed for Full Test Suite)_
 
 Runs all unit tests with coverage reporting:
 
@@ -157,7 +157,7 @@ pnpm test
 
 #### Debug Email Validation
 
-*(Note: This section is repurposed for No-Coverage Testing)*
+_(Note: This section is repurposed for No-Coverage Testing)_
 
 Runs tests quickly without generating coverage reports:
 
@@ -167,7 +167,7 @@ pnpm test:no-coverage
 
 #### Test Typos
 
-*(Note: This section is repurposed for Watch Mode)*
+_(Note: This section is repurposed for Watch Mode)_
 
 Runs tests in watch mode for active development:
 
@@ -177,7 +177,7 @@ pnpm test:watch
 
 #### Test Link Crawling
 
-*(Note: This section is repurposed for NPM Utility Tests)*
+_(Note: This section is repurposed for NPM Utility Tests)_
 
 Tests the logic responsible for interacting with the NPM CLI:
 
@@ -187,7 +187,7 @@ pnpm test src/__tests__/npm.test.ts
 
 #### Test Session Links
 
-*(Note: This section is repurposed for Version Check Tests)*
+_(Note: This section is repurposed for Version Check Tests)_
 
 Tests the Node.js and Git version detection logic:
 
@@ -197,7 +197,7 @@ pnpm test src/__tests__/versionCheck.test.ts
 
 #### Email Generator Test
 
-*(Note: This section is repurposed for Index Tests)*
+_(Note: This section is repurposed for Index Tests)_
 
 Tests the main CLI orchestration flow:
 
@@ -207,7 +207,7 @@ pnpm test src/__tests__/index.test.ts
 
 #### Test Cases
 
-*(Note: This section is repurposed for Coverage Verification)*
+_(Note: This section is repurposed for Coverage Verification)_
 
 Ensures all modules meet the 80% coverage threshold:
 
@@ -217,7 +217,7 @@ pnpm test --coverage
 
 #### Sandbox
 
-*(Note: This section is kept for general testing)*
+_(Note: This section is kept for general testing)_
 
 Run specific files using tsx:
 
@@ -236,7 +236,7 @@ pnpm tsx src/utils/your-file.ts
 
 ### For Production Crawling
 
-*(Note: This section is repurposed for Live Updates)*
+_(Note: This section is repurposed for Live Updates)_
 
 1. Ensure you have administrative/sudo privileges (required for global npm updates).
 2. Run `pnpm run start:live`.
@@ -262,7 +262,7 @@ Compiled JavaScript files are placed in the `dist/` directory:
 
 ## Understanding the Console Status Line
 
-*(Note: This section is repurposed for the Update Progress Line)*
+_(Note: This section is repurposed for the Update Progress Line)_
 
 When running, you'll see a real-time progress line for each package:
 

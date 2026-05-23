@@ -15,8 +15,12 @@ describe('versionCheck', () => {
   });
 
   describe('checkNodeVersion', () => {
-    it('should return version info when fetch succeeds', async () => {
-      const mockNodeData = [{ version: 'v25.0.0' }];
+    it('should return the latest LTS version info when fetch succeeds', async () => {
+      const mockNodeData = [
+        { version: 'v26.0.0', lts: false },
+        { version: 'v24.16.0', lts: 'Iron' },
+        { version: 'v22.10.0', lts: 'Hydrogen' },
+      ];
       (global.fetch as any).mockResolvedValueOnce({
         json: async () => mockNodeData,
       });
@@ -24,9 +28,20 @@ describe('versionCheck', () => {
       const result = await checkNodeVersion();
 
       expect(result.name).toBe('Node.js');
-      expect(result.latest).toBe('25.0.0');
+      expect(result.latest).toBe('24.16.0');
       expect(typeof result.current).toBe('string');
       expect(typeof result.needsUpdate).toBe('boolean');
+    });
+
+    it('should fallback to current version if no LTS version is found', async () => {
+      const mockNodeData = [{ version: 'v26.0.0', lts: false }];
+      (global.fetch as any).mockResolvedValueOnce({
+        json: async () => mockNodeData,
+      });
+
+      const result = await checkNodeVersion();
+
+      expect(result.latest).toBe(result.current);
     });
 
     it('should fallback to current version when fetch fails', async () => {
@@ -38,22 +53,16 @@ describe('versionCheck', () => {
       expect(result.latest).toBe(result.current);
       expect(result.needsUpdate).toBe(false);
     });
-
-    it('should handle empty node versions array', async () => {
-      (global.fetch as any).mockResolvedValueOnce({
-        json: async () => [],
-      });
-
-      const result = await checkNodeVersion();
-
-      expect(result.latest).toBe(result.current);
-    });
   });
 
   describe('checkGitVersion', () => {
-    it('should return git version info', async () => {
+    it('should return git version info and filter out pre-releases', async () => {
       (execSync as any).mockReturnValue('git version 2.40.0');
-      const mockGitTags = [{ name: 'v2.41.0' }, { name: 'v2.40.0' }];
+      const mockGitTags = [
+        { name: 'v2.42.0-rc1' },
+        { name: 'v2.41.0' },
+        { name: 'v2.40.0' },
+      ];
       (global.fetch as any).mockResolvedValueOnce({
         json: async () => mockGitTags,
       });
@@ -62,7 +71,7 @@ describe('versionCheck', () => {
 
       expect(result.name).toBe('Git');
       expect(result.current).toBe('2.40.0');
-      expect(result.latest).toBe('2.41.0');
+      expect(result.latest).toBe('2.41.0'); // Should skip 2.42.0-rc1
       expect(result.needsUpdate).toBe(true);
     });
 

@@ -14,10 +14,13 @@ export async function checkNodeVersion(): Promise<VersionInfo> {
 
   try {
     const response = await fetch('https://nodejs.org/dist/index.json');
-    const data = (await response.json()) as { version: string }[];
+    const data = (await response.json()) as { version: string; lts: any }[];
     if (data && data.length > 0) {
-      // The first one is the latest
-      latest = data[0].version.replace('v', '');
+      // Find the latest LTS version
+      const ltsRelease = data.find((release) => release.lts !== false);
+      if (ltsRelease) {
+        latest = ltsRelease.version.replace('v', '');
+      }
     }
   } catch (error) {
     // Fallback if fetch fails
@@ -51,7 +54,7 @@ export async function checkGitVersion(): Promise<VersionInfo> {
     if (Array.isArray(data)) {
       const versions = data
         .map((tag) => tag.name.replace('v', ''))
-        .filter((v) => semver.valid(v))
+        .filter((v) => semver.valid(v) && !semver.prerelease(v))
         .sort(semver.rcompare);
       if (versions.length > 0) {
         latest = versions[0];
