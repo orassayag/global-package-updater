@@ -227,10 +227,12 @@ This application has an MIT license - see the [LICENSE](LICENSE) file for detail
 - LinkedIn: [Or Assayag](https://il.linkedin.com/in/orassayag)
 
 ## Acknowledgments
+
 - Built for educational and research purposes
 - Respects robots.txt and implements rate limiting
 - Uses user-agent rotation to avoid detection
 - Implements polite crawling practices
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

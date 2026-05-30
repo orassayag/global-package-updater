@@ -1,5 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { checkNodeVersion, checkGitVersion } from '../utils/versionCheck.js';
+import {
+  checkNodeVersion,
+  checkGitVersion,
+  checkPnpmVersion,
+} from '../utils/versionCheck.js';
 import { execSync } from 'child_process';
 
 vi.mock('child_process', () => ({
@@ -121,6 +125,48 @@ describe('versionCheck', () => {
 
       expect(result.current).toBe('0.0.0');
       expect(result.needsUpdate).toBe(false);
+    });
+  });
+
+  describe('checkPnpmVersion', () => {
+    it('should return pnpm version info when fetch succeeds', async () => {
+      (execSync as any).mockReturnValue('11.1.3\n');
+      (global.fetch as any).mockResolvedValueOnce({
+        json: async () => ({ version: '11.5.0' }),
+      });
+
+      const result = await checkPnpmVersion();
+
+      expect(result.name).toBe('pnpm');
+      expect(result.current).toBe('11.1.3');
+      expect(result.latest).toBe('11.5.0');
+      expect(result.needsUpdate).toBe(true);
+    });
+
+    it('should handle pnpm registry fetch failure', async () => {
+      (execSync as any).mockReturnValue('11.1.3\n');
+      (global.fetch as any).mockRejectedValueOnce(new Error('Fetch failed'));
+
+      const result = await checkPnpmVersion();
+
+      expect(result.current).toBe('11.1.3');
+      expect(result.latest).toBe('11.1.3');
+      expect(result.needsUpdate).toBe(false);
+    });
+
+    it('should handle pnpm not installed', async () => {
+      (execSync as any).mockImplementation(() => {
+        throw new Error('command not found');
+      });
+      (global.fetch as any).mockResolvedValueOnce({
+        json: async () => ({ version: '11.5.0' }),
+      });
+
+      const result = await checkPnpmVersion();
+
+      expect(result.current).toBe('0.0.0');
+      expect(result.latest).toBe('11.5.0');
+      expect(result.needsUpdate).toBe(true);
     });
   });
 });

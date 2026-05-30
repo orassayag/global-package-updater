@@ -12,7 +12,9 @@ describe('Logger', () => {
 
   it('should log success message', () => {
     Logger.success('test success');
-    expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('test success'));
+    expect(logSpy).toHaveBeenCalledWith(
+      expect.stringContaining('test success'),
+    );
   });
 
   it('should log warn message', () => {
@@ -27,6 +29,8 @@ describe('Logger', () => {
 
   it('should log section with title', () => {
     Logger.section('TEST SECTION');
-    expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('TEST SECTION'));
+    expect(logSpy).toHaveBeenCalledWith(
+      expect.stringContaining('TEST SECTION'),
+    );
   });
 });

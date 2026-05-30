@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Logger } from '../utils/logger.js';
 import * as npmUtils from '../utils/npm.js';
 import * as versionUtils from '../utils/versionCheck.js';
+import * as pnpmUtils from '../utils/pnpm.js';
 import { main } from '../index.js';
 
 // Mock the entire modules
@@ -23,6 +24,12 @@ vi.mock('../utils/npm.js', () => ({
 vi.mock('../utils/versionCheck.js', () => ({
   checkNodeVersion: vi.fn(),
   checkGitVersion: vi.fn(),
+  checkPnpmVersion: vi.fn(),
+}));
+
+vi.mock('../utils/pnpm.js', () => ({
+  updatePnpm: vi.fn(),
+  isPnpmInstalled: vi.fn(),
 }));
 
 // Mock ora and chalk
@@ -63,6 +70,13 @@ describe('CLI Entry Point', () => {
       latest: '2.40.0',
       needsUpdate: false,
     });
+    vi.mocked(versionUtils.checkPnpmVersion).mockResolvedValue({
+      name: 'pnpm',
+      current: '11.1.3',
+      latest: '11.1.3',
+      needsUpdate: false,
+    });
+    vi.mocked(pnpmUtils.isPnpmInstalled).mockReturnValue(true);
 
     await main();
 
@@ -98,6 +112,13 @@ describe('CLI Entry Point', () => {
       latest: '2.40.0',
       needsUpdate: false,
     });
+    vi.mocked(versionUtils.checkPnpmVersion).mockResolvedValue({
+      name: 'pnpm',
+      current: '11.1.3',
+      latest: '11.1.3',
+      needsUpdate: false,
+    });
+    vi.mocked(pnpmUtils.isPnpmInstalled).mockReturnValue(true);
 
     await main();
 
@@ -121,6 +142,13 @@ describe('CLI Entry Point', () => {
       latest: '2.40.0',
       needsUpdate: false,
     });
+    vi.mocked(versionUtils.checkPnpmVersion).mockResolvedValue({
+      name: 'pnpm',
+      current: '11.1.3',
+      latest: '11.1.3',
+      needsUpdate: false,
+    });
+    vi.mocked(pnpmUtils.isPnpmInstalled).mockReturnValue(true);
 
     await main();
 
@@ -128,5 +156,33 @@ describe('CLI Entry Point', () => {
       'All global packages are up to date!',
     );
     expect(npmUtils.updatePackage).not.toHaveBeenCalled();
+  });
+
+  it('should update pnpm when a new version is available', async () => {
+    vi.mocked(npmUtils.getOutdatedPackages).mockReturnValue([]);
+    vi.mocked(versionUtils.checkNodeVersion).mockResolvedValue({
+      name: 'Node.js',
+      current: '20.0.0',
+      latest: '20.0.0',
+      needsUpdate: false,
+    });
+    vi.mocked(versionUtils.checkGitVersion).mockResolvedValue({
+      name: 'Git',
+      current: '2.40.0',
+      latest: '2.40.0',
+      needsUpdate: false,
+    });
+    vi.mocked(versionUtils.checkPnpmVersion).mockResolvedValue({
+      name: 'pnpm',
+      current: '11.1.3',
+      latest: '11.5.0',
+      needsUpdate: true,
+    });
+    vi.mocked(pnpmUtils.isPnpmInstalled).mockReturnValue(true);
+
+    await main();
+
+    expect(pnpmUtils.updatePnpm).toHaveBeenCalled();
+    expect(Logger.section).toHaveBeenCalledWith('pnpm Update');
   });
 });

@@ -71,3 +71,31 @@ export async function checkGitVersion(): Promise<VersionInfo> {
     needsUpdate: semver.gt(latest, current),
   };
 }
+
+export async function checkPnpmVersion(): Promise<VersionInfo> {
+  let current = '0.0.0';
+  try {
+    const output = execSync('pnpm --version', { encoding: 'utf-8' });
+    current = output.trim();
+  } catch {
+    // pnpm not installed
+  }
+
+  let latest = current;
+  try {
+    const response = await fetch('https://registry.npmjs.org/pnpm/latest');
+    const data = (await response.json()) as { version: string };
+    if (data && data.version) {
+      latest = data.version;
+    }
+  } catch (error) {
+    // Fallback
+  }
+
+  return {
+    name: 'pnpm',
+    current,
+    latest,
+    needsUpdate: semver.gt(latest, current),
+  };
+}

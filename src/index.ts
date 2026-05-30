@@ -9,12 +9,25 @@ import {
 import {
   checkNodeVersion,
   checkGitVersion,
+  checkPnpmVersion,
   VersionInfo,
 } from './utils/versionCheck.js';
+import { updatePnpm, isPnpmInstalled } from './utils/pnpm.js';
 
 async function main() {
   Logger.section('Global Package Updater');
+  console.log(chalk.gray('Checking environment and packages...'));
 
+  // 1. Check all versions first
+  const [nodeInfo, gitInfo, pnpmInfoInitial] = await Promise.all([
+    checkNodeVersion(),
+    checkGitVersion(),
+    isPnpmInstalled() ? checkPnpmVersion() : Promise.resolve(null),
+  ]);
+
+  let pnpmInfo = pnpmInfoInitial;
+
+  // 2. Update Global npm Packages
   const spinner = ora('Checking for outdated global packages...').start();
   const outdated = getOutdatedPackages();
   spinner.stop();
@@ -65,13 +78,31 @@ async function main() {
     }
   }
 
+  // 3. Update pnpm if needed
+  if (pnpmInfo && pnpmInfo.needsUpdate) {
+    Logger.section('pnpm Update');
+    const updateSpinner = ora(
+      `Updating ${chalk.cyan('pnpm')} | ${pnpmInfo.current} -> ${pnpmInfo.latest}`,
+    ).start();
+    try {
+      updatePnpm();
+      updateSpinner.succeed(
+        `Updated ${chalk.cyan('pnpm')} | ${pnpmInfo.current} -> ${pnpmInfo.latest}`,
+      );
+      // Update the info object so the summary shows it's up to date
+      pnpmInfo = {
+        ...pnpmInfo,
+        current: pnpmInfo.latest,
+        needsUpdate: false,
+      };
+    } catch (error: any) {
+      updateSpinner.fail(`Failed to update ${chalk.cyan('pnpm')}`);
+      Logger.error(error.message);
+    }
+  }
+
+  // 4. Environment Check Summary
   Logger.section('Environment Check');
-  const envSpinner = ora('Checking Node.js and Git versions...').start();
-  const [nodeInfo, gitInfo] = await Promise.all([
-    checkNodeVersion(),
-    checkGitVersion(),
-  ]);
-  envSpinner.stop();
 
   const displayVersion = (info: VersionInfo) => {
     const status = info.needsUpdate
@@ -84,6 +115,9 @@ async function main() {
 
   displayVersion(nodeInfo);
   displayVersion(gitInfo);
+  if (pnpmInfo) {
+    displayVersion(pnpmInfo);
+  }
 
   Logger.section('Finish');
   Logger.success('Done!');
