@@ -1,22 +1,45 @@
-# Instructions
+# Setup and Usage Instructions
 
-## Setup Instructions
+## Table of Contents
 
-1. Open the project in your IDE (VSCode recommended)
-2. Install dependencies:
-   ```bash
-   pnpm install
-   ```
-3. Compile the project:
-   ```bash
-   pnpm run build
-   ```
+1. [Prerequisites](#prerequisites)
+2. [Initial Setup](#initial-setup)
+3. [Configuration](#configuration)
+4. [Available Commands](#available-commands)
+5. [Running Scripts](#running-scripts)
+6. [Troubleshooting](#troubleshooting)
+7. [Best Practices](#best-practices)
 
 ## Prerequisites
 
-- Node.js (v20 or higher)
-- pnpm (recommended) or npm
-- Internet connection (for version checks and package updates)
+### System Requirements
+
+- **Node.js**: Version 20 or higher
+- **Package Manager**: pnpm (recommended) or npm
+- **Operating System**: Windows, macOS, or Linux
+- **Network**: Internet connection required for package updates and version checks
+
+## Initial Setup
+
+### 1. Install Dependencies
+
+**Using pnpm (recommended):**
+
+```bash
+pnpm install
+```
+
+**Using npm:**
+
+```bash
+npm install
+```
+
+**Verify installation:**
+
+```bash
+pnpm run build
+```
 
 ## Configuration
 
@@ -92,9 +115,49 @@ _(Note: This section is repurposed for Update Logic)_
 - Sequential Updates: Packages are updated one by one to prevent race conditions.
 - Error Recovery: If an update fails, the application captures the error and proceeds to the next package in the queue.
 
+## Available Commands
+
+### Development Commands
+
+**Linting and Formatting:**
+
+```bash
+# Check code style and quality
+pnpm run lint
+
+# Format all TypeScript files
+pnpm run format
+
+# Check formatting without modifying files
+pnpm run format:check
+```
+
+**Building:**
+
+```bash
+# Compile TypeScript to JavaScript
+pnpm run build
+
+# Development mode with auto-reload
+pnpm run dev
+```
+
+**Testing:**
+
+```bash
+# Run all tests with coverage
+pnpm test
+
+# Run tests in watch mode
+pnpm test:watch
+
+# Open Vitest UI
+pnpm test:ui
+```
+
 ## Running Scripts
 
-### Main Crawler (with Monitor)
+### Main Updater
 
 _(Note: This section is repurposed for the Main Updater)_
 
@@ -310,6 +373,36 @@ When running, you'll see a real-time progress line for each package:
 - Node.js and Git updates must be performed manually as they involve system-level installers.
 - High test coverage (80%+) is enforced to ensure the reliability of the update logic.
 
+## Documentation
+
+For more detailed information, please refer to:
+
+- [README.md](README.md): Project overview and architecture.
+- [CONTRIBUTING.md](CONTRIBUTING.md): Guidelines for contributing to the project.
+- [CHANGELOG.md](CHANGELOG.md): History of changes and versions.
+
+## Extending the Application
+
+To add new features or environment checks:
+
+1. **New Version Check**: Add a new method in `src/utils/versionCheck.ts` to query the desired API.
+2. **New CLI Command**: Register a new script in `package.json` and implement the logic in `src/index.ts`.
+3. **New Utility**: Create a new file in `src/utils/` for shared logic.
+
+## External Resources
+
+- [NPM Documentation](https://docs.npmjs.com/)
+- [Node.js Official Website](https://nodejs.org/)
+- [Git SCM](https://git-scm.com/)
+- [Vitest Documentation](https://vitest.dev/)
+
+## Best Practices
+
+- **Regular Updates**: Run this tool weekly to ensure your global development environment is up to date.
+- **Review Before Live**: Always run `pnpm start` (dry-mode) before `pnpm run start:live`.
+- **Admin Privileges**: Use a terminal with administrative privileges to avoid permission issues during global installations.
+- **Node.js LTS**: Prefer using LTS versions of Node.js for better stability.
+
 ## Author
 
 - **Or Assayag** - _Initial work_ - [orassayag](https://github.com/orassayag)
@@ -317,3 +410,7 @@ When running, you'll see a real-time progress line for each package:
 - GitHub: https://github.com/orassayag
 - StackOverflow: https://stackoverflow.com/users/4442606/or-assayag?tab=profile
 - LinkedIn: https://linkedin.com/in/orassayag
+
+## Last Updated
+
+This documentation was last updated on June 7, 2026.

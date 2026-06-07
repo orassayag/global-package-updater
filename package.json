@@ -1,13 +1,8 @@
 {
   "name": "global-package-updater",
   "version": "1.0.0",
-  "description": "CLI tool that validates globally installed npm packages, checks for available updates, and upgrades them sequentially to ensure stability. It also verifies whether newer versions of Node.js and Git are available, helping you keep your development environment secure, consistent, and fully up to date.",
-  "type": "module",
   "private": false,
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/orassayag/global-package-updater.git"
-  },
+  "description": "CLI tool that validates globally installed npm packages, checks for available updates, and upgrades them sequentially to ensure stability. It also verifies whether newer versions of Node.js and Git are available, helping you keep your development environment secure, consistent, and fully up to date.",
   "keywords": [
     "npm",
     "cli",
@@ -30,23 +25,24 @@
     "workflow",
     "utilities"
   ],
-  "main": "dist/index.js",
-  "scripts": {
-    "lint": "eslint \"src/**/*.ts\"",
-    "format": "prettier --write \"src/**/*.ts\"",
-    "format:check": "prettier --check \"src/**/*.ts\"",
-    "start": "tsx src/index.ts",
-    "start:live": "cross-env DRY_MODE=false tsx src/index.ts",
-    "start:no-cache": "tsx src/index.ts --no-cache",
-    "sync": "tsx src/index.ts --auto",
-    "dev": "tsx watch src/index.ts",
-    "test": "cross-env NODE_OPTIONS='--no-warnings' vitest run --coverage",
-    "test:watch": "cross-env NODE_OPTIONS='--no-warnings' vitest",
-    "test:no-coverage": "cross-env NODE_OPTIONS='--no-warnings' vitest run",
-    "test:ui": "vitest --ui",
-    "build": "tsc"
+  "homepage": "https://github.com/orassayag/global-package-updater#readme",
+  "bugs": {
+    "url": "https://github.com/orassayag/global-package-updater/issues"
   },
-  "author": "Or Assayag <orassayag@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/orassayag/global-package-updater.git"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/orassayag"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Or Assayag",
+    "email": "orassayag@gmail.com",
+    "url": "https://github.com/orassayag"
+  },
   "contributors": [
     {
       "name": "Or Assayag",
@@ -54,32 +50,46 @@
       "url": "https://github.com/orassayag"
     }
   ],
+  "type": "module",
+  "main": "src/index.ts",
   "files": [
+    ".github",
     ".vscode",
-    "dist",
+    "misc",
     "src",
+    ".DS_Store",
     ".gitignore",
+    ".npmrc",
     ".prettierrc",
-    "eslint.config.mjs",
-    "CONTRIBUTING.md",
-    "LICENSE",
-    "INSTRUCTIONS.md",
     "CHANGELOG.md",
+    "CODE_OF_CONDUCT.md",
+    "CONTRIBUTING.md",
+    "eslint.config.mjs",
+    "globalPackageUpdater.bat",
+    "INSTRUCTIONS.md",
+    "LICENSE",
     "package.json",
     "pnpm-lock.yaml",
     "pnpm-workspace.yaml",
     "README.md",
+    "SECURITY.md",
     "tsconfig.json",
+    "tsconfig.node.json",
     "vitest.config.ts"
   ],
-  "license": "MIT",
-  "engines": {
-    "node": ""
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\"",
+    "start": "tsx src/index.ts",
+    "test": "cross-env NODE_OPTIONS='--no-warnings' vitest run --coverage",
+    "test:no-coverage": "cross-env NODE_OPTIONS='--no-warnings' vitest run",
+    "test:ui": "vitest --ui",
+    "test:watch": "cross-env NODE_OPTIONS='--no-warnings' vitest"
   },
   "dependencies": {
     "chalk": "^5.6.2",
     "dotenv": "^17.4.2",
-    "latest-version": "^9.0.0",
     "ora": "^9.4.0",
     "semver": "^7.8.2"
   },
@@ -101,5 +111,9 @@
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.60.1",
     "vitest": "^4.1.8"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=8.0.0"
   }
 }

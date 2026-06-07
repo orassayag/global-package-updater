@@ -44,18 +44,18 @@ async function main() {
       const pkg = outdated[i];
       const progress = `[${i + 1}/${outdated.length}]`;
       const updateSpinner = ora(
-        `Updating ${chalk.cyan(pkg.name)} | ${pkg.current} -> ${pkg.latest} ${progress}`,
+        `Updating ${chalk.cyan(pkg.name)} | ${pkg.current} -> ${pkg.latest} ${progress}`
       ).start();
 
       try {
         updatePackage(pkg.name);
         updateSpinner.succeed(
-          `Updated ${chalk.cyan(pkg.name)} | ${pkg.current} -> ${pkg.latest} ${progress}`,
+          `Updated ${chalk.cyan(pkg.name)} | ${pkg.current} -> ${pkg.latest} ${progress}`
         );
         updated.push(pkg);
       } catch (error: any) {
         updateSpinner.fail(
-          `Failed to update ${chalk.cyan(pkg.name)} ${progress}`,
+          `Failed to update ${chalk.cyan(pkg.name)} ${progress}`
         );
         failed.push({ name: pkg.name, error: error.message });
       }
@@ -72,7 +72,7 @@ async function main() {
       Logger.section('Updated Packages');
       updated.forEach((pkg) => {
         console.log(
-          `${chalk.cyan(pkg.name.padEnd(20))} | ${pkg.current.padEnd(10)} -> ${pkg.latest}`,
+          `${chalk.cyan(pkg.name.padEnd(20))} | ${pkg.current.padEnd(10)} -> ${pkg.latest}`
         );
       });
     }
@@ -82,12 +82,12 @@ async function main() {
   if (pnpmInfo && pnpmInfo.needsUpdate) {
     Logger.section('pnpm Update');
     const updateSpinner = ora(
-      `Updating ${chalk.cyan('pnpm')} | ${pnpmInfo.current} -> ${pnpmInfo.latest}`,
+      `Updating ${chalk.cyan('pnpm')} | ${pnpmInfo.current} -> ${pnpmInfo.latest}`
     ).start();
     try {
       updatePnpm();
       updateSpinner.succeed(
-        `Updated ${chalk.cyan('pnpm')} | ${pnpmInfo.current} -> ${pnpmInfo.latest}`,
+        `Updated ${chalk.cyan('pnpm')} | ${pnpmInfo.current} -> ${pnpmInfo.latest}`
       );
       // Update the info object so the summary shows it's up to date
       pnpmInfo = {
@@ -109,7 +109,7 @@ async function main() {
       ? chalk.yellow(`! Needs to be updated manually (Latest: ${info.latest})`)
       : chalk.green('Up to date');
     console.log(
-      `${chalk.cyan(info.name.padEnd(20))} | ${info.current.padEnd(10)} | ${status}`,
+      `${chalk.cyan(info.name.padEnd(20))} | ${info.current.padEnd(10)} | ${status}`
     );
   };
 

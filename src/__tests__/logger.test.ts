@@ -1,6 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
 import { Logger } from '../utils/logger.js';
-import chalk from 'chalk';
 
 describe('Logger', () => {
   const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
@@ -13,7 +12,7 @@ describe('Logger', () => {
   it('should log success message', () => {
     Logger.success('test success');
     expect(logSpy).toHaveBeenCalledWith(
-      expect.stringContaining('test success'),
+      expect.stringContaining('test success')
     );
   });
 
@@ -30,7 +29,7 @@ describe('Logger', () => {
   it('should log section with title', () => {
     Logger.section('TEST SECTION');
     expect(logSpy).toHaveBeenCalledWith(
-      expect.stringContaining('TEST SECTION'),
+      expect.stringContaining('TEST SECTION')
     );
   });
 });

@@ -85,7 +85,7 @@ describe('npm utils', () => {
       updatePackage('test-pkg');
       expect(execSync).toHaveBeenCalledWith(
         'npm install -g test-pkg',
-        expect.any(Object),
+        expect.any(Object)
       );
     });
   });

@@ -1,5 +1,4 @@
 import { execSync } from 'child_process';
-import { Logger } from './logger.js';
 
 export interface OutdatedPackage {
   name: string;
@@ -38,7 +37,7 @@ export function getOutdatedPackages(): OutdatedPackage[] {
           latest: info.latest,
           location: info.location,
         }));
-      } catch (parseError) {
+      } catch {
         return [];
       }
     }

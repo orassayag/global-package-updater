@@ -1,11 +1,20 @@
 {
   "cSpell.words": [
     "Assayag",
+    "EACCES",
+    "EADDRINUSE",
     "maxtimeout",
     "mintimeout",
     "msvc",
     "orassayag",
     "rcompare",
     "vercel"
+  ],
+  "cSpell.ignorePaths": [
+    "coverage",
+    "node_modules",
+    "dist",
+    "pnpm-lock.yaml",
+    "pnpm-workspace.yaml"
   ]
 }

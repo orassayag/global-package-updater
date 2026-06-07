@@ -1,4 +1,4 @@
-# global-package-updater
+# Global Package Updater
 
 CLI tool that validates globally installed npm packages, checks for available updates, and upgrades them sequentially to ensure stability. It also verifies whether newer versions of Node.js and Git are available.
 
@@ -6,16 +6,24 @@ Built in May 2026. This application automates the process of keeping your global
 
 ## Features
 
-- � **Global NPM Updates**: Automatically detects and upgrades outdated global packages
+### Core Capabilities
+
+- 📦 **Global NPM Updates**: Automatically detects and upgrades outdated global packages
 - 🔄 **Sequential Upgrades**: Updates packages one by one to ensure system stability
 - 🚀 **Progress Tracking**: Real-time animated loading bars and progress status for each update
-- �️ **Environment Check**: Verifies current Node.js and Git versions against the latest releases
-- �️ **Error Handling**: Gracefully catches and reports failed updates while continuing the process
+- 🛠️ **Environment Check**: Verifies current Node.js and Git versions against the latest releases
+
+### Technical Excellence
+
 - 📊 **Detailed Reporting**: Comprehensive summary of updated packages and version changes
 - 🧪 **Full Test Coverage**: Robust unit testing suite using Vitest with high coverage thresholds
-- � **Clean Architecture**: Built with TypeScript and organized into modular utility services
+- 🏗️ **Clean Architecture**: Built with TypeScript and organized into modular utility services
+
+### Developer Experience
+
 - 🎨 **Beautiful UI**: Colorful and informative console output using Chalk and Ora
 - ⚡ **Easy Execution**: Windows-ready .bat script for quick desktop access
+- 🔍 **Error Handling**: Gracefully catches and reports failed updates while continuing the process
 
 ## Getting Started
 
@@ -62,6 +70,29 @@ Execute the provided batch file:
 .\globalPackageUpdater.bat
 ```
 
+## Usage
+
+### Running the Application
+
+To start the global package update process, simply run:
+
+```bash
+pnpm start
+```
+
+This will launch the CLI which sequentially:
+
+1. Scans for outdated global packages.
+2. Prompts for updates (if configured).
+3. Shows real-time progress for each installation.
+4. Performs a final environment check for Node.js and Git.
+
+### Command Line Options
+
+- `pnpm start`: Standard update process.
+- `pnpm run build`: Compile the TypeScript source code.
+- `pnpm test`: Run the full test suite with coverage.
+
 ## Configuration
 
 The application is designed to work out of the box with standard global npm configurations.
@@ -100,19 +131,55 @@ pnpm test:no-coverage   # Run tests without coverage report
 pnpm test:ui            # Open Vitest UI for interactive testing
 ```
 
-## Project Structure
+## Development
+
+### Code Quality
+
+To maintain high code quality, we use ESLint and Prettier:
+
+```bash
+pnpm run lint     # Check for linting errors
+pnpm run format   # Format code using Prettier
+```
+
+### Testing Workflow
+
+Always run tests before submitting changes:
+
+```bash
+pnpm test         # Run all tests
+pnpm test:watch   # Watch mode for active development
+```
+
+## Best Practices
+
+- **Check Before Update**: Always review the list of outdated packages before proceeding with major updates.
+- **Node.js LTS**: It is recommended to stay on the latest LTS (Long Term Support) version of Node.js.
+- **Backup Configuration**: While global packages are easily replaceable, ensure your global configuration files are backed up if they contain custom logic.
+- **Run as Administrator**: On Windows, some global updates may require elevated permissions.
+
+## Architecture
+
+### Architecture Principles
+
+1. **Sequential Execution**: Updates are performed one by one to ensure system stability and clear error tracking.
+2. **Modular Service Layer**: Business logic is separated into utility services (`npm.ts`, `versionCheck.ts`).
+3. **Robust Error Management**: Failed updates do not stop the entire process; they are collected and reported at the end.
+4. **Test-Driven Reliability**: High test coverage ensures that core orchestration and parsing logic remain stable.
+
+### Design Patterns
+
+- **Orchestrator Pattern**: The `index.ts` entry point manages the high-level application flow.
+- **Service Pattern**: Specialized utilities handle interaction with external APIs and the NPM CLI.
+- **Logger Utility**: Standardized terminal output is managed through a central logger service.
+
+### Directory Structure
 
 ```
 global-package-updater/
 ├── src/
 │   ├── __tests__/            # Unit test suite
-│   │   ├── index.test.ts     # Main orchestration tests
-│   │   ├── npm.test.ts       # NPM utility tests
-│   │   └── versionCheck.test.ts # Environment check tests
-│   ├── utils/                # Service layer
-│   │   ├── logger.ts         # Console output utility
-│   │   ├── npm.ts            # NPM command orchestration
-│   │   └── versionCheck.ts   # Node.js and Git version logic
+│   ├── utils/                # Service layer (NPM, Version checks, Logger)
 │   └── index.ts              # Application entry point
 ├── misc/                     # Project planning and reference
 ├── .vscode/                  # Editor configuration
@@ -209,13 +276,22 @@ The environment validation service includes:
 ## Built With
 
 - [Node.js](https://nodejs.org/) - JavaScript runtime environment
-- [Puppeteer.js](https://pptr.dev/) - Headless browser automation
-- [MongoDB](https://www.mongodb.com/) - NoSQL database
-- [Inquirer.js](https://github.com/SBoudrias/Inquirer.js) - Interactive command line user interfaces
+- [Chalk](https://github.com/chalk/chalk) - Terminal string styling
+- [Ora](https://github.com/sindresorhus/ora) - Elegant terminal spinners
+- [Semver](https://github.com/npm/node-semver) - Semantic versioning parser
+- [Vitest](https://vitest.dev/) - Next generation testing framework
+
+## Contributing
+
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+
+## Support
+
+For support, please open an issue on the GitHub repository or contact the author directly.
 
 ## License
 
-This application has an MIT license - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Author
 
@@ -224,17 +300,9 @@ This application has an MIT license - see the [LICENSE](LICENSE) file for detail
 - GitHub: https://github.com/orassayag
 - StackOverflow: https://stackoverflow.com/users/4442606/or-assayag?tab=profile
 - LinkedIn: https://linkedin.com/in/orassayag
-- LinkedIn: [Or Assayag](https://il.linkedin.com/in/orassayag)
 
 ## Acknowledgments
 
 - Built for educational and research purposes
-- Respects robots.txt and implements rate limiting
-- Uses user-agent rotation to avoid detection
-- Implements polite crawling practices
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-- Built to demonstrate advanced Puppeteer.js crawling and validation techniques.
+- Inspired by the need for a simple, sequential global package updater
+- Uses official Node.js and GitHub APIs for version checks

@@ -124,7 +124,7 @@ describe('CLI Entry Point', () => {
 
     expect(Logger.section).toHaveBeenCalledWith('Errors');
     expect(Logger.error).toHaveBeenCalledWith(
-      expect.stringContaining('pkg-fail: Update failed'),
+      expect.stringContaining('pkg-fail: Update failed')
     );
   });
 
@@ -153,7 +153,7 @@ describe('CLI Entry Point', () => {
     await main();
 
     expect(Logger.success).toHaveBeenCalledWith(
-      'All global packages are up to date!',
+      'All global packages are up to date!'
     );
     expect(npmUtils.updatePackage).not.toHaveBeenCalled();
   });
