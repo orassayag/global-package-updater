@@ -91,12 +91,12 @@
     "chalk": "^5.6.2",
     "dotenv": "^17.4.2",
     "ora": "^9.4.0",
-    "semver": "^7.8.4"
+    "semver": "^7.8.5"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@rolldown/binding-win32-x64-msvc": "^1.1.1",
-    "@types/node": "^25.9.3",
+    "@rolldown/binding-win32-x64-msvc": "^1.1.2",
+    "@types/node": "^26.0.0",
     "@types/semver": "^7.7.1",
     "@typescript-eslint/eslint-plugin": "^8.61.1",
     "@typescript-eslint/parser": "^8.61.1",
