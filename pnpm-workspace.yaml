@@ -17,3 +17,5 @@ minimumReleaseAgeExclude:
   - chalk@6.0.0
   - '@types/node@26.1.2'
   - '@rolldown/binding-win32-x64-msvc@1.2.1'
+  - '@types/semver@7.8.0'
+  - tsx@4.23.4
